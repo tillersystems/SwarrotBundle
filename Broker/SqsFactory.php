@@ -74,6 +74,7 @@ class SqsFactory implements FactoryInterface
             'key' => $this->connections[$connection]['login'],
             'secret' => $this->connections[$connection]['password'],
             'region' => $this->connections[$connection]['region'],
+            'version' => 'latest',
         ]);
     }
 }
