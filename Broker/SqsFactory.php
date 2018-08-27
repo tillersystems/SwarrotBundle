@@ -71,9 +71,11 @@ class SqsFactory implements FactoryInterface
         }
 
         return SqsClient::factory([
-            'key' => $this->connections[$connection]['login'],
-            'secret' => $this->connections[$connection]['password'],
             'region' => $this->connections[$connection]['region'],
+            'credentials' => [
+                'key' => $this->connections[$connection]['login'],
+                'secret' => $this->connections[$connection]['password'],
+            ],
             'version' => 'latest',
         ]);
     }
