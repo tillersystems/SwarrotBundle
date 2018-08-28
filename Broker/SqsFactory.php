@@ -4,8 +4,8 @@ namespace Swarrot\SwarrotBundle\Broker;
 
 use Aws\Sqs\SqsClient;
 use Swarrot\Broker\MessageProvider\MessageProviderInterface;
-use Swarrot\Broker\MessageProvider\SqsMessageProvider;
 use Swarrot\Broker\MessagePublisher\MessagePublisherInterface;
+use Swarrot\SwarrotBundle\Broker\MessageProvider\SqsMessageProvider;
 
 class SqsFactory implements FactoryInterface
 {
