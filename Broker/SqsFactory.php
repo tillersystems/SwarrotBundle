@@ -50,7 +50,17 @@ class SqsFactory implements FactoryInterface
      */
     public function getMessagePublisher($name, $connection)
     {
-        throw new \BadMethodCallException('Publishing messages to SQS is not implemented yet');
+        if (!isset($this->messageProviders[$connection][$name])) {
+            if (!isset($this->messageProviders[$connection])) {
+                $this->messageProviders[$connection] = [];
+            }
+
+            $channel = $this->getChannel($connection);
+
+            $this->messageProviders[$connection][$name] = new SqsMessagePublisher($channel, $this->connections[$connection]['host'].$name);
+        }
+
+        return $this->messageProviders[$connection][$name];
     }
 
     /**
