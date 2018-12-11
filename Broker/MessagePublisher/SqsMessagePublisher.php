@@ -22,7 +22,7 @@ final class SqsMessagePublisher implements MessagePublisherInterface
     /** {@inheritdoc} */
     public function publish(Message $message, $routingKey = null)
     {
-        $attributes[];
+        $attributes = [];
         foreach ($message->getProperties() as $key => $value) {
             $attributes[$key] = [
                 'DataType' => 'String',
