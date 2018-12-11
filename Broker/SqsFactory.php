@@ -6,6 +6,7 @@ use Aws\Sqs\SqsClient;
 use Swarrot\Broker\MessageProvider\MessageProviderInterface;
 use Swarrot\Broker\MessagePublisher\MessagePublisherInterface;
 use Swarrot\SwarrotBundle\Broker\MessageProvider\SqsMessageProvider;
+use Swarrot\SwarrotBundle\Broker\MessagePublisher\SqsMessagePublisher;
 
 class SqsFactory implements FactoryInterface
 {

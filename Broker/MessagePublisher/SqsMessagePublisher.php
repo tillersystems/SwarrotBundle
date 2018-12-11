@@ -1,8 +1,10 @@
 <?php
 
-namespace SwarrotBundle\Broker\MessagePublisher;
+namespace Swarrot\SwarrotBundle\Broker\MessagePublisher;
 
+use Aws\Sqs\SqsClient;
 use Swarrot\Broker\Message;
+use Swarrot\Broker\MessagePublisher\MessagePublisherInterface;
 
 final class SqsMessagePublisher implements MessagePublisherInterface
 {
