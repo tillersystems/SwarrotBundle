@@ -85,6 +85,10 @@ class SqsMessageProvider implements MessageProviderInterface
      */
     public function nack(Message $message, $requeue = false)
     {
+        if (!$requeue) {
+            return;
+        }
+
         $this->channel->changeMessageVisibility([
             'QueueUrl' => $this->getQueueName(),
             'ReceiptHandle' => $message->getId(),
