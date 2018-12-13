@@ -35,7 +35,6 @@ final class SqsMessagePublisher implements MessagePublisherInterface
             'MessageAttributes' => $attributes,
             'QueueUrl' => $this->queueUrl,
             'MessageBody' => json_encode($message->getBody()),
-            'MessageGroupId' => $message->getId(),
         ]);
     }
 
