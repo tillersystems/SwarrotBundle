@@ -31,11 +31,19 @@ final class SqsMessagePublisher implements MessagePublisherInterface
                 'StringValue' => $value,
             ];
         }
-        $this->channel->sendMessage([
+        $params = [
             'MessageAttributes' => $attributes,
             'QueueUrl' => $this->queueUrl,
             'MessageBody' => json_encode($message->getBody()),
-        ]);
+        ];
+
+        if ($this->isFifo($this->queueUrl)) {
+            $params = array_merge($params, [
+                'MessageGroupId' => $message->getId(),
+            ]);
+        }
+
+        $this->channel->sendMessage($params);
     }
 
     /**
@@ -44,5 +52,15 @@ final class SqsMessagePublisher implements MessagePublisherInterface
     public function getExchangeName()
     {
         return $this->queueUrl;
+    }
+
+    /**
+     * @param string $queue
+     *
+     * @return bool
+     */
+    private function isFifo(string $queue): bool
+    {
+        return strpos($queue, '.fifo') !== false
     }
 }
