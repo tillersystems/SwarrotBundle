@@ -61,6 +61,6 @@ final class SqsMessagePublisher implements MessagePublisherInterface
      */
     private function isFifo(string $queue): bool
     {
-        return strpos($queue, '.fifo') !== false
+        return false !== strpos($queue, '.fifo');
     }
 }
