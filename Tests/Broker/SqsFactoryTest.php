@@ -3,6 +3,7 @@
 namespace Swarrot\SwarrotBundle\Tests\Broker;
 
 use Swarrot\Broker\MessageProvider\MessageProviderInterface;
+use Swarrot\Broker\MessagePublisher\MessagePublisherInterface;
 use Swarrot\SwarrotBundle\Broker\FactoryInterface;
 use Swarrot\SwarrotBundle\Broker\SqsFactory;
 
@@ -45,5 +46,23 @@ class SqsFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(MessageProviderInterface::class, $messageProvider);
         $this->assertSame('localhost/workers-test', $messageProvider->getQueueName());
+    }
+
+    /**
+     * Test get message publisher.
+     */
+    public function testGetMessagePublisher()
+    {
+        $this->factory->addConnection('sqs', [
+            'login' => 'key',
+            'password' => 'secret',
+            'region' => 'eu-west-1',
+            'host' => 'localhost/',
+        ]);
+
+        $messagePublisher = $this->factory->getMessagePublisher('workers-test', 'sqs');
+
+        $this->assertInstanceOf(MessagePublisherInterface::class, $messagePublisher);
+        $this->assertSame('localhost/workers-test', $messagePublisher->getExchangeName());
     }
 }
