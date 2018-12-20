@@ -27,7 +27,7 @@ final class SqsMessagePublisher implements MessagePublisherInterface
         $attributes = [];
         foreach ($message->getProperties() as $key => $value) {
             $attributes[$key] = [
-                'DataType' => 'String',
+                'DataType' => is_int($value) ? 'Number' : 'String',
                 'StringValue' => $value,
             ];
         }
