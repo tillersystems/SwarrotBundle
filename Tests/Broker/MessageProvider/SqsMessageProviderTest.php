@@ -2,8 +2,8 @@
 
 namespace Swarrot\SwarrotBundle\Tests\Broker\MessageProvider;
 
-use Guzzle\Service\Resource\Model;
 use Aws\Sqs\SqsClient;
+use Guzzle\Service\Resource\Model;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Swarrot\Broker\Message;
@@ -16,8 +16,8 @@ class SqsMessageProviderTest extends TestCase
 
     public function setUp()
     {
-     $this->sqsClient = $this->prophesize(SqsClient::class);
-     $this->provider = new SqsMessageProvider(
+        $this->sqsClient = $this->prophesize(SqsClient::class);
+        $this->provider = new SqsMessageProvider(
          $this->sqsClient->reveal(),
          'foobar'
      );
@@ -33,14 +33,14 @@ class SqsMessageProviderTest extends TestCase
         $result = $this->prophesize(Model::class);
         $message = [
             'MessageAttributes' => [
-                "StringParam" => [
+                'StringParam' => [
                     'DataType' => 'String',
                     'StringValue' => 'mockEntityName',
                 ],
-                "NumberParam" => [
+                'NumberParam' => [
                     'DataType' => 'Number',
                     'StringValue' => 1,
-                ]
+                ],
             ],
         ];
 
@@ -49,5 +49,4 @@ class SqsMessageProviderTest extends TestCase
 
         $this->assertInstanceOf(Message::class, $this->provider->get());
     }
-
 }

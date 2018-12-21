@@ -4,7 +4,6 @@ namespace Swarrot\SwarrotBundle\Tests\Broker\MessagePublisher;
 
 use Aws\Sqs\SqsClient;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
 use Swarrot\Broker\Message;
 use Swarrot\SwarrotBundle\Broker\MessagePublisher\SqsMessagePublisher;
 
@@ -21,7 +20,6 @@ class SqsMessagePublisherTest extends TestCase
             'foobar'
         );
     }
-
 
     public function test_it_is_initializable()
     {
@@ -49,7 +47,7 @@ class SqsMessagePublisherTest extends TestCase
                     'StringValue' => 1,
                 ],
             ],
-            'QueueUrl' => 'type(string)',
+            'QueueUrl' => 'foobar',
             'MessageBody' => json_encode($message->getBody()),
         ];
 
