@@ -42,7 +42,7 @@ class SqsMessageProvider implements MessageProviderInterface
      */
     public function get()
     {
-        if ($message = $this->cache->pop($this->getQueueName())) {
+        if ($message = $this->getFromCache()) {
             return $message;
         }
 
@@ -66,6 +66,14 @@ class SqsMessageProvider implements MessageProviderInterface
             $this->cache->push($this->getQueueName(), $swarrotMessage);
         }
 
+        return $this->getFromCache();
+    }
+
+    /**
+     * @return Message|null
+     */
+    public function getFromCache(): ? Message
+    {
         return $this->cache->pop($this->getQueueName());
     }
 

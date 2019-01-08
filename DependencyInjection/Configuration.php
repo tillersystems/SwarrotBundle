@@ -120,6 +120,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('password')->defaultValue('guest')->end()
                             ->scalarNode('vhost')->defaultValue('/')->cannotBeEmpty()->end()
                             ->scalarNode('region')->defaultNull()->end()
+                            ->integerNode('prefetch')->defaultValue(9)->end()
                             ->booleanNode('ssl')->defaultValue(false)->end()
                             ->arrayNode('ssl_options')
                                 ->children()

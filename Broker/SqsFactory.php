@@ -37,7 +37,7 @@ class SqsFactory implements FactoryInterface
 
             $channel = $this->getChannel($connection);
 
-            $this->messageProviders[$connection][$name] = new SqsMessageProvider($channel, $this->connections[$connection]['host'].$name);
+            $this->messageProviders[$connection][$name] = new SqsMessageProvider($channel, $this->connections[$connection]['host'].$name, null, $this->connections[$connection]['prefetch']);
         }
 
         return $this->messageProviders[$connection][$name];
