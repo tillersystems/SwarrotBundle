@@ -19,6 +19,7 @@ return [
                 'cafile' => null,
                 'local_cert' => null,
             ],
+            'prefetch' => 9,
         ],
     ],
     'consumers' => [

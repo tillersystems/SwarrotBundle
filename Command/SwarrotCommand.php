@@ -5,6 +5,8 @@ namespace Swarrot\SwarrotBundle\Command;
 use Swarrot\Consumer;
 use Swarrot\Processor\ProcessorInterface;
 use Swarrot\Processor\Stack\Builder;
+use Swarrot\SwarrotBundle\Broker\SqsConsumer;
+use Swarrot\SwarrotBundle\Broker\SqsFactory;
 use Swarrot\SwarrotBundle\Processor\ProcessorConfiguratorInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -92,7 +94,17 @@ class SwarrotCommand extends ContainerAwareCommand
         $factory = $this->getContainer()->get('swarrot.factory.default');
         $messageProvider = $factory->getMessageProvider($options['queue'], $options['connection']);
 
-        $consumer = new Consumer($messageProvider, $processor, $optionsResolver);
+        switch (true) {
+            case $factory instanceof SqsFactory:
+                $consumer = new SqsConsumer($messageProvider, $processor, $optionsResolver);
+
+                break;
+
+            default:
+                $consumer = new Consumer($messageProvider, $processor, $optionsResolver);
+
+                break;
+        }
 
         $consumer->consume($options);
     }
