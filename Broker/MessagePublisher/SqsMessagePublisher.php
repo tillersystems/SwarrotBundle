@@ -11,6 +11,8 @@ final class SqsMessagePublisher implements MessagePublisherInterface
     private $channel;
     private $queueUrl;
 
+    const MESSAGE_DEDUPLICATION_ID = 'MessageDeduplicationId';
+
     /**
      * @param SqsClient $channel
      * @param string    $queueUrl
@@ -25,11 +27,16 @@ final class SqsMessagePublisher implements MessagePublisherInterface
     public function publish(Message $message, $routingKey = null)
     {
         $attributes = [];
+        $messageDeduplicationId = null;
         foreach ($message->getProperties() as $key => $value) {
-            $attributes[$key] = [
-                'DataType' => is_int($value) ? 'Number' : 'String',
-                'StringValue' => $value,
-            ];
+            if (MESSAGE_DEDUPLICATION_ID === $key) {
+                $messageDeduplicationId = $value;
+            } else {
+                $attributes[$key] = [
+                    'DataType' => is_int($value) ? 'Number' : 'String',
+                    'StringValue' => $value,
+                ];
+            }
         }
         $params = [
             'MessageAttributes' => $attributes,
@@ -41,6 +48,12 @@ final class SqsMessagePublisher implements MessagePublisherInterface
             $params = array_merge($params, [
                 'MessageGroupId' => $message->getId(),
             ]);
+
+            if (!is_null($messageDeduplicationId)) {
+                $params = array_merge($params, [
+                    'MessageDeduplicationId' => $messageDeduplicationId,
+                ]);
+            }
         }
 
         $this->channel->sendMessage($params);
