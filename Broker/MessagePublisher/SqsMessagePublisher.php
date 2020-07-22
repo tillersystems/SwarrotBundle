@@ -29,7 +29,7 @@ final class SqsMessagePublisher implements MessagePublisherInterface
         $attributes = [];
         $messageDeduplicationId = null;
         foreach ($message->getProperties() as $key => $value) {
-            if (MESSAGE_DEDUPLICATION_ID === $key) {
+            if (self::MESSAGE_DEDUPLICATION_ID === $key) {
                 $messageDeduplicationId = $value;
             } else {
                 $attributes[$key] = [
